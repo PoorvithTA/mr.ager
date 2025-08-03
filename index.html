@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title> Mr. Ager - Poorvith T.A</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <style>
+    body {
+      background: linear-gradient(120deg,#181a2a,#223469 80%);
+      min-height: 100vh;
+      margin: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: Product Sans;
+    }
+    .panel {
+      background: rgba(40,45,70,0.76);
+      backdrop-filter: blur(7px);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px #1e254030;
+      padding: 2em 2.2em 2.2em 2.2em;
+      margin: 1em 0;
+      text-align: center;
+      max-width: 95vw;
+    }
+    h1 {
+      margin-bottom: 0.6em;
+      font-size: 2.2em;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg,#21d4fd,#ab7cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    p{ background: linear-gradient(90deg,#21d4fd,#ab7cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;}
+    label { 
+      color: #fff; font-weight: 700; font-size: 1.18em; letter-spacing: 1.2px;
+    }
+    input[type="date"],input[type="time"] {
+      margin: 10px 4px 15px 4px;
+      padding: 8px 14px;
+      border-radius: 9px; border:none;
+      background: #223469; color: #fff;
+      font-size: 1.1em;
+      font-family: inherit;
+      box-shadow: 0 2px 14px #22346950;
+    }
+    .counter {
+      font-size: 2em;
+      font-weight: 900;
+      color: #fff;
+      margin: 1.3em 0 0.6em 0;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg,#f7971e,#ab7cff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      word-break: break-all;
+    }
+    .chunk {
+      background: rgba(255,255,255,0.08);
+      padding: 4px 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px #21d4fd13;
+      margin: 3px;
+      color: inherit;
+      display: inline-block;
+      min-width: 70px;
+    }
+    .label {
+      display: block;
+      font-size: 0.69em;
+      color: #b3c7fa;
+      padding-top: 2px;
+      font-weight: 600;
+    }
+    @media (max-width: 520px) {
+      .panel { padding: 1em 2vw 1.4em 2vw;}
+      h1 { font-size: 1.4em;}
+      .counter { font-size: 1.12em;}
+      .chunk { min-width: 48px;}
+    }
+       footer {
+      margin-top: auto;
+      background-color: #0d1117;
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #ccc;
+      border-top: 2px solid #1f2a36;
+      width: calc(100% - 2cm);
+      margin-left: 1cm;
+      margin-right: 1cm;
+      margin-top: 1cm;
+      border-radius: 16px;
+    }
+    footer a {
+      color: #72a4f2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>Mr. Ager</h1>
+    <p>Enter a date and time to see how long it has been since then.</p>
+    <p>Use the date and time inputs below to select a starting point.</p>
+    <label for="dateInput">Choose starting date and time:</label><br>
+    <input id="dateInput" type="date" value="2000-01-01"/>
+    <input id="timeInput" type="time" value="00:00:00" step="1"/><br>
+    <div class="counter" id="counterDisplay"></div>
+  </div>
+  <footer>
+    Made with 💓 &amp; Care by 
+    <a href="https://youtube.com/@PoorvithsLife_Official" target="_blank">Poorvith T.A</a>
+    <br><br>
+    <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+    <script>
+    kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'O5O81GPS1N');
+    kofiwidget2.draw();
+    </script>
+    <br><br>
+    © 2025 Poorvith T.A • 
+    <a href="https://ig.me/m/i_am_poorvith" target="_blank">Contact Me</a>
+  </footer>
+  <script>
+    function pad(n) {
+      return n < 10 ? '0'+n : n;
+    }
+    function plural(val, word) {
+      return val === 1 ? word : word+'s';
+    }
+    function getDateObj() {
+      const dateStr = document.getElementById('dateInput').value;
+      const timeStr = document.getElementById('timeInput').value || "00:00:00";
+      if (!dateStr) return null;
+      return new Date(dateStr+'T'+timeStr);
+    }
+    function calcDiff(from, now) {
+      let diff = Math.max(0, now - from);
+      let fromY = from.getFullYear(), fromM = from.getMonth(), fromD = from.getDate();
+      let toY = now.getFullYear(), toM = now.getMonth(), toD = now.getDate();
+      let years = toY - fromY;
+      let months = toM - fromM;
+      if (months < 0) {months += 12; years--;}
+      let days = toD - fromD;
+      if (days < 0) {
+        let prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += prevMonth.getDate();
+        months--; if (months < 0) { months=11; years--; }
+      }
+      let h = now.getHours() - from.getHours();
+      let m = now.getMinutes() - from.getMinutes();
+      let s = now.getSeconds() - from.getSeconds();
+      if (s < 0) { s += 60; m--; }
+      if (m < 0) { m += 60; h--; }
+      if (h < 0) { h += 24; days--; 
+        if (days < 0) {
+          let prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+          days = prevMonth.getDate() - 1;
+          months--; if (months < 0) { months=11; years--; }
+        }
+      }
+      return {years, months, days, h, m, s};
+    }
+    function update() {
+      const from = getDateObj();
+      const disp = document.getElementById('counterDisplay');
+      if (!from) { disp.textContent="Select a date." ; return;}
+      const now = new Date();
+      const {years, months, days, h, m, s} = calcDiff(from, now);
+      disp.innerHTML =
+        `<span class="chunk">${years}<span class="label">Year${years!=1?"s":""}</span></span>` +
+        `<span class="chunk">${months}<span class="label">Month${months!=1?"s":""}</span></span>` +
+        `<span class="chunk">${days}<span class="label">Day${days!=1?"s":""}</span></span>` +
+        ' <br>'+
+        `<span class="chunk">${pad(h)}<span class="label">Hour${h!=1?"s":""}</span></span>` +
+        `<span class="chunk">${pad(m)}<span class="label">Min${m!=1?"s":""}</span></span>` +
+        `<span class="chunk">${pad(s)}<span class="label">Sec${s!=1?"s":""}</span></span>`;
+    }
+    document.getElementById('dateInput').addEventListener('input', update);
+    document.getElementById('timeInput').addEventListener('input', update);
+    setInterval(update, 1000);
+    update();
+  </script>
+</body>
+</html>
